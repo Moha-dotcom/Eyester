@@ -2,6 +2,9 @@ package org.example;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class Company{
 
@@ -12,6 +15,40 @@ public class Company{
     public Company() throws SQLException, IOException {
 
     }
+
+
+
+
+    public void getEmployeeInfo(Integer employeeid) throws SQLException {
+        String findEmployeeById = "select * from EMPLOYEES\n" +
+                "WHERE EMPLOYEES.empno = ? ";
+
+        preparestatement = dbConnection.establishConnection().prepareStatement(findEmployeeById);
+        preparestatement.setInt(1, employeeid);
+
+        ResultSet resultSet = preparestatement.executeQuery();
+
+        System.out.println("empno " + " \t\t" + "name" + " \t\t" + "job" + "\t\t" + "Manager" + "\t\t\t\t" + "Hire date" + "\t\t" +
+                "Salary" + "\t\t" + "Commission" + "\t\t\t\t\t" + "deptNo");
+        System.out.println("-------------------------------------------------------------------------------------------------------------");
+        while (resultSet.next()){
+            int empno = resultSet.getInt("empno");
+            String name = resultSet.getString("name");
+            String job = resultSet.getString("job");
+            String Manager = resultSet.getString("manager");
+            Date hiredate = resultSet.getDate("hiredate");
+            int salary = resultSet.getInt("salary");
+            int commision = resultSet.getInt("commission");
+            int deptno = resultSet.getInt("deptno");
+
+            System.out.println(empno + " \t\t" + name + " \t\t" + job + "\t\t" + Manager + "\t\t" + hiredate + "\t\t" +
+                    salary + "\t\t\t" + commision + "\t\t\t\t" + deptno);
+
+        }
+
+//        return Optional.ofNullable();
+    }
+
 
 
     public void ShowJoinedTables(String sql) throws SQLException {
@@ -55,7 +92,6 @@ public class Company{
             preparestatement.setInt(1,department.getDepartno());
             preparestatement.setString(2, department.getDepartmentName());
             preparestatement.setString(3, department.getDepartmentLoc());
-
             preparestatement.execute();
             preparestatement.close();
 

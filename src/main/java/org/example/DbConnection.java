@@ -18,7 +18,7 @@ public class DbConnection {
             Properties configuration  = new Properties();
             InputStream inputStream = DbConnection.class
                     .getClassLoader()
-                    .getResourceAsStream("application.properties");
+                    .getResourceAsStream("db.properties");
             configuration.load(inputStream);
             if (inputStream != null) {
                 inputStream.close();
